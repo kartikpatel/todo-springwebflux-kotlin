@@ -30,9 +30,7 @@ class TodoController(val todoRepository: TodoRepository = TodoRepository()) {
     private fun deleteAll(): Mono<Void> = todoRepository.deleteAll()
 
     @PatchMapping("/{id}", consumes = [MediaType.APPLICATION_JSON_VALUE])
-    private fun update(@PathVariable id: String, @RequestBody value: Map<String, Any>) {
-        todoRepository.update(UUID.fromString(id), value)
-    }
+    private fun update(@PathVariable id: String, @RequestBody value: Map<String, Any>): Mono<TodoItem> = todoRepository.update(UUID.fromString(id), value)
 
     @DeleteMapping("/{id}")
     private fun deleteById(@PathVariable id: String): Mono<Void> = todoRepository.deleteById(UUID.fromString(id))
