@@ -1,5 +1,7 @@
-package com.fueledbysoda.todo
+package com.fueledbysoda.todo.controller
 
+import com.fueledbysoda.todo.model.TodoItem
+import com.fueledbysoda.todo.model.TodoRepository
 import org.springframework.http.HttpHeaders
 import org.springframework.http.MediaType
 import reactor.core.publisher.Mono
@@ -21,13 +23,13 @@ class TodoController(val todoRepository: TodoRepository = TodoRepository()) {
     @GetMapping("/{id}", produces = [MediaType.APPLICATION_JSON_VALUE])
     private fun getTodoById(@PathVariable id: String): Mono<TodoItem> = todoRepository.findById(UUID.fromString(id))
 
-    @PostMapping
+    @PostMapping(consumes = [MediaType.APPLICATION_JSON_VALUE])
     private fun add(@RequestBody value: TodoItem): Mono<TodoItem> = todoRepository.save(value).toMono()
 
     @DeleteMapping
     private fun deleteAll(): Mono<Void> = todoRepository.deleteAll()
 
-    @PatchMapping("/{id}")
+    @PatchMapping("/{id}", consumes = [MediaType.APPLICATION_JSON_VALUE])
     private fun update(@PathVariable id: String, @RequestBody value: Map<String, Any>) {
         todoRepository.update(UUID.fromString(id), value)
     }

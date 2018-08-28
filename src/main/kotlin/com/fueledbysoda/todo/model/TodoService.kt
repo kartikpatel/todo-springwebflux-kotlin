@@ -1,8 +1,9 @@
-package com.fueledbysoda.todo
+package com.fueledbysoda.todo.model
 
+import com.fueledbysoda.todo.config.ApplicationProperties
 import java.util.*
 
-class TodoService {
+class TodoService(val props: ApplicationProperties = ApplicationProperties()) {
     private val items = arrayListOf<TodoItem>()
 
     fun list(): List<TodoItem> {
@@ -15,7 +16,9 @@ class TodoService {
     }
 
     fun add(input: TodoItem): TodoItem {
-        val item = TodoItem(title = input.title, order = input.order)
+        val id = UUID.randomUUID()
+        val url = "${props.rootUrl()}/$id"
+        val item = TodoItem(id = id, title = input.title, order = input.order, url = url)
         items.add(item)
         return item
     }
