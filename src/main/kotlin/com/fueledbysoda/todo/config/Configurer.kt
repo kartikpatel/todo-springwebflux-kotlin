@@ -12,7 +12,8 @@ class Configurer: WebFluxConfigurer {
     override fun addCorsMappings(registry: CorsRegistry) {
         super.addCorsMappings(registry)
 
-        registry.addMapping("*")
+        registry.addMapping("/**")
+                .allowedOrigins("*")
                 .allowedMethods(HttpMethod.GET.name, HttpMethod.POST.name, HttpMethod.OPTIONS.name, HttpMethod.DELETE.name, HttpMethod.PATCH.name)
                 .allowedHeaders("X-PINGARUNNER", "Content-Type")
     }
