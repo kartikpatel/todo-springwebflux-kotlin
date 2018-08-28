@@ -1,9 +1,15 @@
 package com.fueledbysoda.todo.model
 
-import com.fueledbysoda.todo.config.ApplicationProperties
+import com.fueledbysoda.todo.config.TodoApplicationProperties
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.stereotype.Service
 import java.util.*
 
-class TodoService(val props: ApplicationProperties = ApplicationProperties()) {
+@Service
+class TodoService {
+    @Autowired
+    lateinit var props: TodoApplicationProperties
+
     private val items = arrayListOf<TodoItem>()
 
     fun list(): List<TodoItem> {

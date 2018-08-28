@@ -1,7 +1,7 @@
 package com.fueledbysoda.todo.model
 
-import com.fueledbysoda.todo.config.ApplicationProperties
-import org.springframework.data.repository.Repository
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.stereotype.Repository
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 import reactor.core.publisher.toFlux
@@ -9,8 +9,10 @@ import reactor.core.publisher.toMono
 import java.io.FileNotFoundException
 import java.util.*
 
-class TodoRepository : Repository<TodoItem, UUID> {
-    private val todoService: TodoService = TodoService(props = ApplicationProperties())
+@Repository
+class TodoRepository {
+    @Autowired
+    lateinit var todoService: TodoService
 
     fun save(entity: TodoItem): Mono<TodoItem> = todoService.add(entity).toMono()
 
